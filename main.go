@@ -16,6 +16,7 @@ func main() {
 	router.RegisterUsuariosRoutes(r) // Verifica que coincida con el nombre en go.mod
 	{
 		router.RegisterUsuariosRoutes(r)
+		router.RegisterRolesRoutes(r)
 	
 
 	log.Println("Servidor iniciado en http://localhost:8082")
