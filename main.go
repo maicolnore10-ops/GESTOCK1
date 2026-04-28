@@ -2,7 +2,7 @@ package main
 
 import (
     "Autenticacion/config"
-    "Autenticacion/router" // Verifica que coincida con el nombre en go.mod
+    "Autenticacion/router" 
     "log"
     "net/http"
     "github.com/gorilla/mux"
@@ -13,8 +13,7 @@ func main() {
 	r := mux.NewRouter()
 
 	// Registro de los dos módulos
-	router.RegisterUsuariosRoutes(r) // Verifica que coincida con el nombre en go.mod
-	{
+	router.RegisterUsuariosRoutes(r) 
 		router.RegisterUsuariosRoutes(r)
 		router.RegisterRolesRoutes(r)
 	
@@ -22,4 +21,3 @@ func main() {
 	log.Println("Servidor iniciado en http://localhost:8082")
 	http.ListenAndServe(":8082", r)
 	}
-}

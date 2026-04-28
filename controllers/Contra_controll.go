@@ -4,6 +4,8 @@ import (
 	"Autenticacion/config"
 	"encoding/json"
 	"net/http"
+	"Autenticacion/models"
+	"github.com/gorilla/mux"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -43,3 +45,31 @@ func EstablecerContrasena(w http.ResponseWriter, r *http.Request) {
 
 	respondJSON(w, 200, map[string]string{"message": "Contraseña establecida correctamente"})
 }
+
+// GetAllPasswords obtiene todas las contraseñas de un usuario
+func GetAllPasswords(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
+	var passwords []models.ContraHash
+
+	query := `SELECT id_password, id_usuario, contrasena_hash, fecha_creacion, fecha_modificacion 
+	          FROM Autenticacion.passwords WHERE id_usuario = $1`
+
+	rows, err := config.DB.Query(query, id)
+	if err != nil {
+		respondJSON(w, 500, map[string]string{"error": "Error al consultar contraseñas: " + err.Error()})
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var p models.ContraHash
+		err := rows.Scan(&p.IDContra, &p.IDUsuario, &p.ContraHash, &p.FechaCreacion, &p.FechaModificacion)
+		if err != nil {
+			continue
+		}
+		passwords = append(passwords, p)
+	}
+
+	respondJSON(w, 200, passwords)
+}
+
