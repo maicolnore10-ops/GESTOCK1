@@ -1,1 +1,0 @@
-# GESTOCK1
