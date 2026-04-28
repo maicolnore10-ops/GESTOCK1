@@ -3,7 +3,7 @@ package models
 import "time"
 
 // Role representa la estructura de la tabla Autenticacion.roles
-type Role struct {
+type Roles struct {
 	IDRol             int       `json:"id_rol"`
 	NombreRol         string    `json:"nombre_rol"`
 	Activo            bool      `json:"activo"`
