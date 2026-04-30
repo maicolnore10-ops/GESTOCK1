@@ -2,8 +2,10 @@ package controllers
 
 import (
 	"Autenticacion/config"
+	"Autenticacion/models"
 	"encoding/json"
 	"net/http"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -45,13 +47,13 @@ func SetPassword(w http.ResponseWriter, r *http.Request) {
 }
 
 // VerifyPassword es una función de ejemplo para el Login
-func VerifyPassword(w http.ResponseWriter, r *http.Request) {
+func VerifyContrasena(w http.ResponseWriter, r *http.Request) {
 	var loginData PasswordUpdate
 	json.NewDecoder(r.Body).Decode(&loginData)
 
 	var storedHash string
 	query := `SELECT contrasena_hash FROM Autenticacion.contrasena_hash WHERE id_usuario = $1`
-	
+
 	err := config.DB.QueryRow(query, loginData.IDUsuario).Scan(&storedHash)
 	if err != nil {
 		respondJSON(w, 401, map[string]string{"error": "Usuario no tiene contraseña configurada"})
@@ -66,4 +68,28 @@ func VerifyPassword(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respondJSON(w, 200, map[string]string{"message": "Autenticación exitosa"})
+}
+func VerifyPassword(w http.ResponseWriter, r *http.Request) {
+	var creds models.LoginRequest
+	if err := json.NewDecoder(r.Body).Decode(&creds); err != nil {
+		respondJSON(w, 400, map[string]string{"error": "Datos inválidos"})
+		return
+	}
+
+	var storedHash string
+	query := `SELECT contrasena_hash FROM Autenticacion.contrasena_hash WHERE id_usuario = $1`
+	err := config.DB.QueryRow(query, creds.IDUsuario).Scan(&storedHash)
+
+	if err != nil {
+		respondJSON(w, 404, map[string]string{"error": "Usuario no encontrado"})
+		return
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(storedHash), []byte(creds.Password))
+	if err != nil {
+		respondJSON(w, 401, map[string]string{"valido": "false", "mensaje": "Contraseña incorrecta"})
+		return
+	}
+
+	respondJSON(w, 200, map[string]string{"valido": "true", "mensaje": "¡Es la misma contraseña!"})
 }

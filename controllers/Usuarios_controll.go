@@ -32,7 +32,7 @@ func GetAllUsuarios(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		var u models.Usuario
 		err := rows.Scan(&u.IDUsuario, &u.IDRol, &u.Correo, &u.Nombres, &u.Apellidos, 
-			&u.Telefono, &u.FechaNacimiento, &u.Documento, &u.Estado, &u.Activo, 
+			&u.Telefono, &u.FechaNacimiento, &u.Documento, &u.Activo, 
 			&u.TwoFactorActivo, &u.FechaCreacion, &u.FechaModificacion)
 		
 		if err != nil {
@@ -55,7 +55,7 @@ func GetUsuarioByID(w http.ResponseWriter, r *http.Request) {
 
 	err := config.DB.QueryRow(query, id).Scan(&u.IDUsuario, &u.IDRol, &u.Correo, 
 		&u.Nombres, &u.Apellidos, &u.Telefono, &u.FechaNacimiento, &u.Documento, 
-		&u.Estado, &u.Activo, &u.TwoFactorActivo)
+		 &u.Activo, &u.TwoFactorActivo)
 
 	if err != nil {
 		respondJSON(w, 404, map[string]string{"error": "Usuario no encontrado"})

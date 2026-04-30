@@ -7,4 +7,5 @@ import (
 
 func RegisterContrasenaRoutes(router *mux.Router) {
 	router.HandleFunc("/contrasena_hash", controllers.SetPassword).Methods("POST")
+	router.HandleFunc("/verifyContrasena", controllers.VerifyContrasena).Methods("POST")
 }
