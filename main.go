@@ -14,8 +14,8 @@ func main() {
 
 	// Registro de los dos módulos
 	router.RegisterUsuariosRoutes(r) 
-		router.RegisterUsuariosRoutes(r)
-		router.RegisterRolesRoutes(r)
+	router.RegisterRolesRoutes(r)
+	router.RegisterContrasenaRoutes(r)
 	
 
 	log.Println("Servidor iniciado en http://localhost:8082")
