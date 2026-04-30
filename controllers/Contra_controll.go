@@ -9,13 +9,13 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type RequestPassword struct {
+type RequestContra struct {
 	IDUsuario int    `json:"id_usuario"`
 	Password  string `json:"password"`
 }
 
 func EstablecerContrasena(w http.ResponseWriter, r *http.Request) {
-	var req RequestPassword
+	var req RequestContra
 	
 	// 1. Decodificar el JSON
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
