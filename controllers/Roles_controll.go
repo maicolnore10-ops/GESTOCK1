@@ -73,3 +73,17 @@ func UpdateRol(w http.ResponseWriter, r *http.Request) {
 
 	respondJSON(w, 200, map[string]string{"message": "Rol actualizado con éxito"})
 }
+
+// DeleteRol elimina un rol de la base de datos
+func DeleteRol(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
+
+	query := `DELETE FROM Autenticacion.roles WHERE id_rol = $1`
+	_, err := config.DB.Exec(query, id)
+	if err != nil {
+		respondJSON(w, 500, map[string]string{"error": err.Error()})
+		return
+	}
+
+	respondJSON(w, 200, map[string]string{"message": "Rol eliminado con éxito"})
+}

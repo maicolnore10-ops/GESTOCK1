@@ -16,7 +16,6 @@ func main() {
 	router.RegisterUsuariosRoutes(r) 
 		router.RegisterUsuariosRoutes(r)
 		router.RegisterRolesRoutes(r)
-		router.RegisterContraRoutes(r)
 	
 
 	log.Println("Servidor iniciado en http://localhost:8082")
