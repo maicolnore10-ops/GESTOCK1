@@ -13,9 +13,10 @@ func main() {
 	r := mux.NewRouter()
 
 	// Registro de los dos módulos
-	router.RegisterUsuariosRoutes(r) 
-	router.RegisterRolesRoutes(r)
-	router.RegisterContrasenaRoutes(r)
+	routes.RegisterUsuariosRoutes(r) 
+	routes.RegisterRolesRoutes(r)
+	routes.RegisterContrasenaRoutes(r)
+	routes.SetupAuditoriaRoutes(r)
 	
 
 	log.Println("Servidor iniciado en http://localhost:8082")
