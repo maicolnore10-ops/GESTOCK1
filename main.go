@@ -17,6 +17,7 @@ func main() {
 	routes.RegisterRolesRoutes(r)
 	routes.RegisterContrasenaRoutes(r)
 	routes.SetupAuditoriaRoutes(r)
+	routes.SetupRecuperacionRoutes(r)
 	
 
 	log.Println("Servidor iniciado en http://localhost:8082")
