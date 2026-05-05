@@ -50,7 +50,7 @@ func ValidarCodigo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
-		respondJSON(w, 400, map[string]string{"error": "Datos inválidos"})
+		respondJSON(w, 400, map[string]string{"error": "Datos inválidos: usuario no encontrado"})
 		return
 	}
 

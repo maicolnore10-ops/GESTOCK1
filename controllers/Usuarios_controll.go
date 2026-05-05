@@ -5,6 +5,7 @@ import (
 	"Autenticacion/models"
 	"encoding/json"
 	"net/http"
+	"fmt"
 	"github.com/gorilla/mux"
 )
 
@@ -22,17 +23,19 @@ func GetAllUsuarios(w http.ResponseWriter, r *http.Request) {
 	          fecha_creacion, fecha_modificacion FROM Autenticacion.usuarios WHERE activo = true`
 
 	rows, err := config.DB.Query(query)
+	fmt.Println(query)
 	if err != nil {
 		respondJSON(w, 500, map[string]string{"error": err.Error()})
 		return
 	}
 	defer rows.Close()
 
+
 	var usuarios []models.Usuario
 	for rows.Next() {
 		var u models.Usuario
 		err := rows.Scan(&u.IDUsuario, &u.IDRol, &u.Correo, &u.Nombres, &u.Apellidos, 
-			&u.Telefono, &u.FechaNacimiento, &u.Documento, &u.Activo, 
+			&u.Telefono, &u.FechaNacimiento, &u.Documento,&u.Estado, &u.Activo, 
 			&u.TwoFactorActivo, &u.FechaCreacion, &u.FechaModificacion)
 		
 		if err != nil {
@@ -54,7 +57,7 @@ func GetUsuarioByID(w http.ResponseWriter, r *http.Request) {
 	          FROM Autenticacion.usuarios WHERE id_usuario = $1`
 
 	err := config.DB.QueryRow(query, id).Scan(&u.IDUsuario, &u.IDRol, &u.Correo, 
-		&u.Nombres, &u.Apellidos, &u.Telefono, &u.FechaNacimiento, &u.Documento, 
+		&u.Nombres, &u.Apellidos, &u.Telefono, &u.FechaNacimiento, &u.Estado,  &u.Documento, 
 		 &u.Activo, &u.TwoFactorActivo)
 
 	if err != nil {

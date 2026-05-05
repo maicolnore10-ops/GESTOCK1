@@ -12,6 +12,7 @@ type Usuario struct {
 	Telefono          string    `json:"telefono"`
 	FechaNacimiento   string    `json:"fecha_nacimiento"` 
 	Documento         int       `json:"documento"`
+	Estado            string    `json:"estado"`
 	Activo            bool      `json:"activo"`
 	TwoFactorActivo   bool      `json:"two_factor_activo"`
 	FechaCreacion     time.Time `json:"fecha_creacion"`
